@@ -2,12 +2,13 @@
 from langchain.memory import ConversationSummaryBufferMemory
 from langchain.chains import ConversationChain
 from langchain_aws import ChatBedrockConverse
+import os
 # 2a Write a function for invoking model- client connection with Bedrock with profile, model_id & Inference params- model_kwargs
 
 
 def demo_chatbot():
     demo_llm = ChatBedrockConverse(
-        credentials_profile_name='default',
+        credentials_profile_name=os.getenv('AWS_PROFILE', 'default'),
         model="amazon.nova-pro-v1:0",
         temperature=0.1,
         max_tokens=1000)
