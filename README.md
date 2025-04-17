@@ -1,6 +1,11 @@
 # 🤖 Chatbot com Amazon Bedrock - Caso de Estudo
 
+Este projeto foi desenvolvido com base no tutorial de Rahul Trisal, utilizando os serviços AWS Bedrock, Streamlit e Langchain. O código original foi fornecido por Rahul Trisal em sua aula, e eu fiz alterações apenas nos pontos onde ele ensinou que era necessário personalizar.
 Este é um caso de estudo que demonstra a implementação de um chatbot utilizando o Amazon Bedrock, um serviço gerenciado da AWS para construção de aplicações com IA generativa.
+
+## Alterações feitas
+
+* Nenhuma alteração específica foi feita além das personalizações ensinadas por Rahul Trisal.
 
 ## 🏗️ Estrutura do Projeto
 
@@ -31,6 +36,9 @@ O projeto é dividido em duas partes principais:
 - Amazon Bedrock
 - AWS SDK
 - Docker
+- Streamlit
+- Langchain
+- Python
 
 ## 🚀 Benefícios do Amazon Bedrock
 
@@ -58,3 +66,7 @@ O projeto é dividido em duas partes principais:
 - Backup e recuperação
 
 Este caso de estudo demonstra como implementar um chatbot robusto e escalável utilizando os serviços da AWS, com foco no Amazon Bedrock para processamento de linguagem natural.
+
+## Créditos
+
+* Rahul Trisal, por fornecer o código original e o tutorial.
