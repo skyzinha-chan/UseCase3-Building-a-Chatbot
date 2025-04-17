@@ -8,10 +8,12 @@ import os
 
 def demo_chatbot():
     demo_llm = ChatBedrockConverse(
-        credentials_profile_name=os.getenv('AWS_PROFILE', 'default'),
         model="amazon.nova-pro-v1:0",
         temperature=0.1,
-        max_tokens=1000)
+        max_tokens=1000,
+        # opcional se definido nos secrets
+        region_name=os.getenv("AWS_REGION", "us-east-1")
+    )
     return demo_llm
 # 3 Create a Function for ConversationBufferMemory (llm and max token limit)
 
