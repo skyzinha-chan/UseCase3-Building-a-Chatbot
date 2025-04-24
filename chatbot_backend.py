@@ -1,44 +1,62 @@
-# 1 import the ConversationSummaryBufferMemory, ConversationChain, ChatBedrock or ChatBedrockConverse Langchain Modules
+# 1. Importações necessárias
 from langchain.memory import ConversationSummaryBufferMemory
 from langchain.chains import ConversationChain
 from langchain_aws import ChatBedrockConverse
 import os
-# 2a Write a function for invoking model- client connection with Bedrock with profile, model_id & Inference params- model_kwargs
+
+# 2. Função para instanciar o modelo ChatBedrockConverse
 
 
-def demo_chatbot():
+def demo_chatbot() -> ChatBedrockConverse:
+    """
+    Instancia e retorna um modelo ChatBedrockConverse com parâmetros padrão.
+    """
     demo_llm = ChatBedrockConverse(
         model="amazon.nova-pro-v1:0",
         temperature=0.1,
         max_tokens=1000,
-        # opcional se definido nos secrets
         region_name=os.getenv("AWS_REGION", "us-east-1")
     )
     return demo_llm
-# 3 Create a Function for ConversationBufferMemory (llm and max token limit)
+
+# 3. Função para configurar a memória de conversa
 
 
-def demo_memory():
-    llm_data = demo_chatbot()
-    memory = ConversationSummaryBufferMemory(
-        llm=llm_data, max_token_limit=2000)
+def demo_memory(llm: ChatBedrockConverse) -> ConversationSummaryBufferMemory:
+    """
+    Cria uma memória de buffer com resumo da conversa utilizando o modelo fornecido.
+    """
+    memory = ConversationSummaryBufferMemory(llm=llm, max_token_limit=2000)
     return memory
-# 4 Create a Function for Conversation Chain - Input text + Memory
+
+# 4. Função para realizar uma conversa com o modelo e memória fornecidos
 
 
-def demo_conversation(input_text, memory):
-    llm_chain_data = demo_chatbot()
+def demo_conversation(
+    input_text: str,
+    llm: ChatBedrockConverse,
+    memory: ConversationSummaryBufferMemory
+) -> str:
+    """
+    Executa a conversa com base em um input de texto, modelo LLM e memória de conversa.
+    Retorna a resposta do modelo.
+    """
     llm_conversation = ConversationChain(
-        llm=llm_chain_data,
+        llm=llm,
         memory=memory,
         verbose=True
     )
-# 5 Chat response using invoke (Prompt template)
     chat_reply = llm_conversation.invoke(input_text)
     return chat_reply['response']
 
 
-# Links :
-# https://docs.aws.amazon.com/bedrock/latest/APIReference/API_runtime_Converse.html
-# https://docs.aws.amazon.com/bedrock/latest/userguide/bedrock-runtime_example_bedrock-runtime_Converse_AmazonTitanText_section.html
-# https://docs.aws.amazon.com/bedrock/latest/userguide/model-parameters-deepseek.html
+# 5. Bloco de execução principal para testes locais
+if __name__ == "__main__":
+    llm_instance = demo_chatbot()
+    memory_instance = demo_memory(llm_instance)
+
+    pergunta = "Qual a capital da França?"
+    resposta = demo_conversation(pergunta, llm_instance, memory_instance)
+
+    print("Pergunta:", pergunta)
+    print("Resposta:", resposta)
